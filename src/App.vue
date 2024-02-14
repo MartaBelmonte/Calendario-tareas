@@ -9,22 +9,22 @@
     </header>
 
     <!-- Contenedor principal -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6" style="height: 50vh;">
-          <CalendarWidget @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm"
-            @date-selected="updateSelectedDate" ref="calendarWidget" />
-        </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6" style="height: 50vh;">
+            <CalendarWidget :tasks="tasks" @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm"
+              @date-selected="updateSelectedDate" ref="calendarWidget" />
+          </div>
 
-        <!-- Componente TaskList -->
-        <div class="col-md-6 mt-5">
-          <div class="task-list-container">
-            <h2 class="text-center">Tareas Pendientes</h2>
-            <TaskList :tasks="tasks" :selectedDate="selectedDate" @task-deleted="handleTaskDeleted" />
+          <!-- Componente TaskList -->
+          <div class="col-md-6 mt-5">
+            <div class="task-list-container">
+              <h2 class="text-center">Tareas Pendientes</h2>
+              <TaskList :tasks="tasks" :selectedDate="selectedDate" @task-deleted="handleTaskDeleted" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
     <!-- Input de texto y botón -->
     <div class="container" v-if="selectedDate">
@@ -70,15 +70,19 @@ export default {
       this.selectedDate = date;
     },
     handleTaskSaved(taskInfo) {
-      this.tasks.push(taskInfo);
-      this.$refs.calendarWidget.addEventToCalendar(taskInfo);
+      // Verificar si la tarea ya existe en el array
+      const existingTaskIndex = this.tasks.findIndex(task => task.id === taskInfo.id);
+      if (existingTaskIndex === -1) {
+        // Si no existe, agregarla al array
+        this.tasks.push(taskInfo);
+        this.$refs.calendarWidget.addEventToCalendar(taskInfo);
+      }
     },
     handleTaskDeleted(task) {
-      const index = this.tasks.findIndex(t => t === task);
-      if (index !== -1) {
-        this.tasks.splice(index, 1);
-        this.$refs.calendarWidget.removeEventFromCalendar(task.id);
-      }
+      // Filtrar las tareas para eliminar cualquier tarea con el mismo ID que la tarea que se va a eliminar
+      this.tasks = this.tasks.filter(t => t.id !== task.id);
+      // Eliminar el evento del calendario
+      this.$refs.calendarWidget.removeEventFromCalendar(task.id);
     },
     saveTask() {
       if (this.taskText.trim() !== '') {

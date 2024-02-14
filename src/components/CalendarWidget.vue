@@ -13,6 +13,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 
 export default {
     name: 'CalendarWidget',
+    props: ['tasks'],
     components: {
         FullCalendar
     },
@@ -73,12 +74,12 @@ export default {
             this.calendarOptions.events.push(event);
         },
         handleTaskDeleted(task) {
-            const index = this.calendarOptions.events.findIndex(e => e.id === task.id);
-            if (index !== -1) {
-                this.calendarOptions.events.splice(index, 1);
-                this.removeEventFromCalendar(task.id); // Eliminar el evento del calendario
-            }
-        }
+            // Vuelve a cargar todos los eventos del calendario
+            this.calendarOptions.events = this.calendarOptions.events.filter(e => e.id !== task.id);
+
+            // Emitir evento para informar a App.vue sobre la tarea eliminada
+            this.$emit('task-deleted', task);
+        },
     },
     mounted() {
         // Establecer la referencia al calendario cuando el componente se monta
@@ -95,6 +96,7 @@ export default {
     margin-top: 70px;
 }
 </style>
+
 
 
 
