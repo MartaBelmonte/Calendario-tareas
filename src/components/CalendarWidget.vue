@@ -1,15 +1,14 @@
 <template>
-    <div>
-        <div class="calendar-container">
-            <FullCalendar ref="calendar" :options="calendarOptions" class="full-calendar" />
-        </div>
+    <div class="calendar-container">
+        <FullCalendar ref="calendar" :options="calendarOptions" class="full-calendar" />
     </div>
 </template>
 
 <script>
+import { ref } from 'vue';
+
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import esLocale from '@fullcalendar/core/locales/es';
 import interactionPlugin from '@fullcalendar/interaction';
 
 export default {
@@ -17,12 +16,29 @@ export default {
     components: {
         FullCalendar
     },
+    setup() {
+        const calendarRef = ref(null);
+
+        const removeEventFromCalendar = (eventId) => {
+            if (calendarRef.value) {
+                const calendarApi = calendarRef.value.getApi();
+                const event = calendarApi.getEventById(eventId);
+                if (event) {
+                    event.remove();
+                }
+            }
+        };
+
+        return {
+            calendarRef,
+            removeEventFromCalendar
+        };
+    },
     data() {
         return {
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin],
                 initialView: 'dayGridMonth',
-                locale: esLocale,
                 height: '500px',
                 aspectRatio: 1.2,
                 themeSystem: 'bootstrap',
@@ -53,10 +69,20 @@ export default {
             // Cambia el color del día seleccionado
             info.dayEl.style.backgroundColor = '#ffff99';
         },
-        addEventToCalendar (event) {
-            this.calendarOptions.events.push(event)
+        addEventToCalendar(event) {
+            this.calendarOptions.events.push(event);
+        },
+        handleTaskDeleted(task) {
+            const index = this.calendarOptions.events.findIndex(e => e.id === task.id);
+            if (index !== -1) {
+                this.calendarOptions.events.splice(index, 1);
+                this.removeEventFromCalendar(task.id); // Eliminar el evento del calendario
+            }
         }
-
+    },
+    mounted() {
+        // Establecer la referencia al calendario cuando el componente se monta
+        this.calendarRef = this.$refs.calendar;
     }
 };
 </script>
@@ -69,6 +95,19 @@ export default {
     margin-top: 70px;
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

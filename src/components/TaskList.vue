@@ -1,9 +1,10 @@
 <template>
     <div>
         <div class="task-list">
-            <div v-for="(task, index) in tasks" :key="index">
+            <div v-for="task in tasks" :key="task.id">
                 <div class="task-item">
                     <strong>{{ task.date }}:</strong> {{ task.title }}
+                    <button @click="deleteTask(task)">Eliminar</button>
                 </div>
                 <hr class="task-divider">
             </div>
@@ -14,7 +15,12 @@
 <script>
 export default {
     name: 'TaskList',
-    props: ['tasks'], // Recibe las tareas y la fecha seleccionada como propiedades
+    props: ['tasks'], // Recibe las tareas como propiedades
+    methods: {
+        deleteTask(task) {
+            this.$emit('task-deleted', task);
+        }
+    }
 };
 </script>
 
@@ -37,6 +43,11 @@ export default {
     /* Espacio entre las tareas */
 }
 </style>
+
+
+
+
+
 
 
 
