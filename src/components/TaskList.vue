@@ -1,17 +1,42 @@
 <template>
     <div>
-        <!-- Aquí va tu lista de tareas -->
+        <div class="task-list">
+            <div v-for="(task, index) in tasks" :key="index">
+                <div class="task-item">
+                    <strong>{{ selectedDate }}:</strong> {{ task.text }}
+                </div>
+                <hr class="task-divider">
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     name: 'TaskList',
-    props: ['tasks'], // Recibe las tareas como prop
-    // Implementa la lógica de la lista de tareas aquí
-}
+    props: ['tasks', 'selectedDate'], // Recibe las tareas y la fecha seleccionada como propiedades
+};
 </script>
 
 <style scoped>
-/* Estilos específicos del componente */
+.task-list {
+    background-color: #f0f0f0;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 40px;
+}
+
+.task-item {
+    margin-bottom: 10px;
+}
+
+.task-divider {
+    border-top: 1px solid #ccc;
+    /* Línea de separación entre las tareas */
+    margin-top: 20px;
+    /* Espacio entre las tareas */
+}
 </style>
+
+
+
