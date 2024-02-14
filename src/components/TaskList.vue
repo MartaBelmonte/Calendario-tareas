@@ -3,7 +3,7 @@
         <div class="task-list">
             <div v-for="(task, index) in tasks" :key="index">
                 <div class="task-item">
-                    <strong>{{ selectedDate }}:</strong> {{ task.text }}
+                    <strong>{{ task.date }}:</strong> {{ task.title }}
                 </div>
                 <hr class="task-divider">
             </div>
@@ -14,7 +14,7 @@
 <script>
 export default {
     name: 'TaskList',
-    props: ['tasks', 'selectedDate'], // Recibe las tareas y la fecha seleccionada como propiedades
+    props: ['tasks'], // Recibe las tareas y la fecha seleccionada como propiedades
 };
 </script>
 

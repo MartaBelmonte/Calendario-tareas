@@ -31,6 +31,7 @@ export default {
                     center: 'title',
                     end: 'next'
                 },
+                events: [],
                 eventDidMount: this.handleEventMount,
                 dateClick: this.handleDayClick
             },
@@ -45,7 +46,15 @@ export default {
         handleDayClick(info) {
             const selectedDate = info.dateStr;
             this.$emit('date-selected', selectedDate);
-            this.$emit('show-task-form');
+            // Resetea el color de todos los días
+            document.querySelectorAll('.fc-day').forEach(day => {
+                day.style.backgroundColor = '';
+            });
+            // Cambia el color del día seleccionado
+            info.dayEl.style.backgroundColor = '#ffff99';
+        },
+        addEventToCalendar (event) {
+            this.calendarOptions.events.push(event)
         }
 
     }

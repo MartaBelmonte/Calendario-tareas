@@ -4,7 +4,7 @@
     <header class="bg-primary text-white py-4">
       <div class="container text-center">
         <h1 class="task-title mb-2">Mi Lista de Tareas</h1>
-        <p class="lead mb-0">Selecciona un día y escribe tu tarea pendiente</p>
+        <p class="lead mb-0 blinking-text">Selecciona un día y escribe tu tarea pendiente</p>
       </div>
     </header>
 
@@ -12,7 +12,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6" style="height: 50vh;">
-          <CalendarWidget @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm" @date-selected="updateSelectedDate" />
+          <CalendarWidget @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm" @date-selected="updateSelectedDate" ref="calendarWidget" />
         </div>
 
       <!-- Componente TaskList -->
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Input de texto y botón -->
-    <div class="container" v-if="showTaskForm">
+    <div class="container" v-if="selectedDate">
       <div class="row mt-1"> <!-- Reducido el margen top -->
         <div class="col-md-6 offset-md-6">
           <div class="input-group">
@@ -70,14 +70,11 @@ export default {
     },
     handleTaskSaved(taskInfo) {
       this.tasks.push(taskInfo);
-    },
-    toggleTaskForm() {
-      console.log('Fecha recibida en App.vue:', this.selectedDate);
-      this.showTaskForm = !this.showTaskForm;
+      this.$refs.calendarWidget.addEventToCalendar(taskInfo);
     },
     saveTask() {
       if (this.taskText.trim() !== '') {
-        this.handleTaskSaved({ date: this.selectedDate, text: this.taskText });
+        this.handleTaskSaved({ date: this.selectedDate, title: this.taskText });
         this.taskText = ''; // Limpiar el campo de texto
       }
     },
@@ -101,6 +98,17 @@ export default {
   height: 40vh;
   /* Reducir la altura */
   overflow-y: auto;
+}
+
+/* Aplicar la animación al párrafo */
+.blinking-text {
+  animation: blinking 1.5s infinite;
+}
+
+@keyframes blinking {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }
 </style>
 
