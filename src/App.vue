@@ -75,7 +75,6 @@ export default {
       if (existingTaskIndex === -1) {
         // Si no existe, agregarla al array
         this.tasks.push(taskInfo);
-        this.$refs.calendarWidget.addEventToCalendar(taskInfo);
       }
     },
     handleTaskDeleted(task) {

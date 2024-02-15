@@ -10,6 +10,7 @@ import { ref } from 'vue';
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import esLocale from '@fullcalendar/core/locales/es';
 
 export default {
     name: 'CalendarWidget',
@@ -40,6 +41,7 @@ export default {
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin],
                 initialView: 'dayGridMonth',
+                locale: esLocale,
                 height: '500px',
                 aspectRatio: 1.2,
                 themeSystem: 'bootstrap',
@@ -84,8 +86,18 @@ export default {
     mounted() {
         // Establecer la referencia al calendario cuando el componente se monta
         this.calendarRef = this.$refs.calendar;
+    },
+    watch: {
+        tasks: {
+            handler(newTasks) {
+                // Actualizar los eventos del calendario cuando cambien las tareas
+                this.calendarOptions.events = newTasks;
+            },
+            deep: true // Observar cambios profundos en las tareas (para arrays y objetos)
+        }
     }
 };
+
 </script>
 
 <style scoped>
