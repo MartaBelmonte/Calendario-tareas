@@ -9,35 +9,27 @@
     </header>
 
     <!-- Contenedor principal -->
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6" style="height: 50vh;">
-            <CalendarWidget :tasks="tasks" @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm"
-              @date-selected="updateSelectedDate" ref="calendarWidget" />
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6" style="height: 50vh;">
+          <CalendarWidget :tasks="tasks" @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm"
+            @date-selected="updateSelectedDate" ref="calendarWidget" />
+        </div>
 
-          <!-- Componente TaskList -->
-          <div class="col-md-6 mt-5">
-            <div class="task-list-container">
-              <h2 class="text-center">Tareas Pendientes</h2>
-              <TaskList :tasks="tasks" :selectedDate="selectedDate" @task-deleted="handleTaskDeleted" />
-            </div>
+        <!-- Componente TaskList -->
+        <div class="col-md-6 mt-5">
+          <div class="task-list-container">
+            <h2 class="text-center">Tareas Pendientes</h2>
+            <TaskList :tasks="tasks" :selectedDate="selectedDate" @task-deleted="handleTaskDeleted" />
           </div>
         </div>
       </div>
+    </div>
 
     <!-- Input de texto y botón -->
-    <div class="container" v-if="selectedDate">
-      <div class="row mt-1"> <!-- Reducido el margen top -->
         <div class="col-md-6 offset-md-6">
-          <div class="input-group">
-            <textarea v-model="taskText" rows="3" class="form-control mb-1"
-              placeholder="Ingrese su tarea aquí"></textarea> <!-- Ajustar el margen inferior -->
-            <button @click="saveTask" class="btn btn-primary btn-sm ml-2" style="height: 40px; line-height: 1;">Guardar
-              tarea</button>
-          </div>
+          <TaskInput :selectedDate="selectedDate" @new-task="handleTaskSaved"/>
         </div>
-      </div>
     </div>
 
     <!-- Footer -->
@@ -46,22 +38,22 @@
         <p class="mb-0">© 2024 Marta Belmonte Andrés</p>
       </div>
     </footer>
-  </div>
 </template>
 
 <script>
 import CalendarWidget from './components/CalendarWidget.vue';
+import TaskInput from './components/TaskInput.vue';
 import TaskList from './components/TaskList.vue';
 
 export default {
   components: {
     CalendarWidget,
-    TaskList
-  },
+    TaskList,
+    TaskInput
+},
   data() {
     return {
       tasks: [],
-      taskText: '',
       selectedDate: null
     };
   },
@@ -82,16 +74,6 @@ export default {
       this.tasks = this.tasks.filter(t => t.id !== task.id);
       // Eliminar el evento del calendario
       this.$refs.calendarWidget.removeEventFromCalendar(task.id);
-    },
-    saveTask() {
-      if (this.taskText.trim() !== '') {
-        const taskInfo = { id: this.generateUniqueId(), date: this.selectedDate, title: this.taskText };
-        this.handleTaskSaved(taskInfo);
-        this.taskText = '';
-      }
-    },
-    generateUniqueId() {
-      return Math.random().toString(36).substr(2, 9); // Simple función para generar un ID único
     }
   }
 };
@@ -129,6 +111,16 @@ export default {
   }
 }
 </style>
+
+
+
+
+
+
+
+
+
+
 
 
 
