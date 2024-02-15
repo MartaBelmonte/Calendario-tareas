@@ -12,7 +12,8 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6" style="height: 50vh;">
-          <CalendarWidget :tasks="tasks" @date-selected="updateSelectedDate" ref="calendarWidget" />
+          <CalendarWidget :tasks="tasks" @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm"
+            @date-selected="updateSelectedDate" ref="calendarWidget" />
         </div>
 
         <!-- Componente TaskList -->
@@ -25,15 +26,15 @@
       </div>
     </div>
 
-    <!-- Input de texto y botón (solo en dispositivos móviles) -->
-    <div class="container d-md-none"><!-- Mostrar solo en dispositivos móviles -->
-      <div class="row mt-3">
-        <div class="col-12">
+    <!-- Input de texto y botón -->
+    <div class="container" v-if="selectedDate">
+      <div class="row mt-1">
+        <div class="col-md-6 offset-md-6 mt-3 mb-3"><!-- Se agregó margen arriba y abajo -->
           <div class="input-group">
             <textarea v-model="taskText" rows="3" class="form-control mb-1"
-              placeholder="Ingrese su tarea aquí"></textarea>
+              placeholder="Ingrese su tarea aquí"></textarea><!-- Ajustar el margen inferior -->
             <button @click="saveTask" class="btn btn-primary btn-sm ml-2" style="height: 40px; line-height: 1;">Guardar
-              tarea</button>
+              tarea</button><!-- Centrar el botón -->
           </div>
         </div>
       </div>
@@ -127,7 +128,52 @@ export default {
     opacity: 1;
   }
 }
+
+
+/* Estilos para la versión móvil */
+@media (max-width: 767.98px) {
+  .task-list-container {
+    margin-top: 150px; /* Espacio adicional en la parte superior */
+    overflow-y: scroll; /* Agregar scroll vertical cuando sea necesario */
+  }
+
+  .input-group {
+    margin-top: -190px; /* Espacio entre el task-list-container y el input-group */
+    display: flex; /* Usar flexbox para alinear elementos */
+    flex-direction: column; /* Apilar elementos verticalmente */
+    align-items: center; /* Centrar elementos horizontalmente */
+  }
+
+  .input-group textarea {
+    width: calc(100% - 20px); /* Ancho del textarea menos el espacio para el padding */
+    max-width: 100%; /* Ancho máximo del textarea */
+    margin-bottom: 5px; /* Ajuste del margen inferior del input text */
+    padding: 10px; /* Ajuste del relleno */
+    box-sizing: border-box; /* Incluir padding en el ancho */
+    height: auto; /* Altura automática para ajustarse al contenido */
+    resize: vertical; /* Permitir redimensionamiento vertical */
+    width: auto !important;
+  }
+
+  .input-group button {
+  width: 150px; /* Ancho del botón */
+  display: block; /* Convertir el botón en un bloque para que ocupe todo el ancho disponible */
+  margin: 0 auto; /* Margen automático para centrarlo horizontalmente */
+  text-align: center; /* Alinear el texto del botón al centro */
+  position: relative; /* Añadir posición relativa */
+  left: 50%; /* Desplazar el botón hacia la derecha un 50% del ancho del contenedor */
+  transform: translateX(-50%); /* Centrar el botón en relación con su propio ancho */
+  }
+}
+
 </style>
+
+
+
+
+
+
+
 
 
 
