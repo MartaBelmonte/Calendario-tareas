@@ -1,9 +1,11 @@
 <template>
-
-    <!-- Encabezado -->
-<header class="bg-primary text-white py-4">
-      <div class="container text-center"/>
-    </header>
+  <!-- Encabezado -->
+      <header class="bg-primary text-white py-4">
+        <div class="container text-center">
+          <h1 class="task-title mb-2">Mi Lista de Tareas</h1>
+          <p class="lead mb-0 blinking-text">Selecciona un día y escribe tu tarea pendiente</p>
+        </div>
+      </header>
 
     <!-- Contenedor principal -->
 <main class="container">
