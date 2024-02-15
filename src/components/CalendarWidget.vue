@@ -104,8 +104,6 @@ export default {
 .full-calendar {
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 500px;
-    margin-top: 70px;
 }
 </style>
 

@@ -1,5 +1,4 @@
 <template>
-  <div>
     <!-- Encabezado -->
     <header class="bg-primary text-white py-4">
       <div class="container text-center">
@@ -9,31 +8,32 @@
     </header>
 
     <!-- Contenedor principal -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6" style="height: 50vh;">
+    <main class="container">
+      <div class="row my-3">
+        <div class="col-12 col-md-6">
           <CalendarWidget :tasks="tasks" @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm"
             @date-selected="updateSelectedDate" ref="calendarWidget" />
         </div>
 
         <!-- Componente TaskList -->
-        <div class="col-md-6 mt-5">
+        <div class="col-12 col-md-6">
           <div class="task-list-container">
             <h2 class="text-center">Tareas Pendientes</h2>
             <TaskList :tasks="tasks" :selectedDate="selectedDate" @task-deleted="handleTaskDeleted" />
           </div>
         </div>
       </div>
-    </div>
+    <div class="row mb-5">
 
     <!-- Input de texto y botón -->
-        <div class="col-md-6 offset-md-6">
+        <div class="col-12">
           <TaskInput :selectedDate="selectedDate" @new-task="handleTaskSaved"/>
         </div>
     </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer bg-dark text-white py-3 mt-4 fixed-bottom">
+    <footer class="footer bg-dark text-white py-2 mt-4 fixed-bottom">
       <div class="container text-center">
         <p class="mb-0">© 2024 Marta Belmonte Andrés</p>
       </div>
@@ -86,11 +86,6 @@ export default {
 
 .lead {
   font-size: 1.25rem;
-}
-
-.task-list-container {
-  height: 40vh;
-  overflow-y: auto;
 }
 
 .blinking-text {
