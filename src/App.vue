@@ -1,14 +1,12 @@
 <template>
+
     <!-- Encabezado -->
-    <header class="bg-primary text-white py-4">
-      <div class="container text-center">
-        <h1 class="task-title mb-2">Mi Lista de Tareas</h1>
-        <p class="lead mb-0 blinking-text">Selecciona un día y escribe tu tarea pendiente</p>
-      </div>
+<header class="bg-primary text-white py-4">
+      <div class="container text-center"/>
     </header>
 
     <!-- Contenedor principal -->
-    <main class="container">
+<main class="container">
       <div class="row my-3">
         <div class="col-12 col-md-6">
           <CalendarWidget :tasks="tasks" @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm"
@@ -33,7 +31,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer bg-dark text-white py-2 mt-4 fixed-bottom">
+<footer class="footer bg-dark text-white py-2 mt-4 fixed-bottom">
       <div class="container text-center">
         <p class="mb-0">© 2024 Marta Belmonte Andrés</p>
       </div>
@@ -50,7 +48,7 @@ export default {
     CalendarWidget,
     TaskList,
     TaskInput
-},
+  },
   data() {
     return {
       tasks: [],
@@ -77,7 +75,8 @@ export default {
     }
   }
 };
-</script>
+
+</script >
 
 <style>
 .task-title {
@@ -104,8 +103,7 @@ export default {
   100% {
     opacity: 1;
   }
-}
-</style>
+}</style>
 
 
 
