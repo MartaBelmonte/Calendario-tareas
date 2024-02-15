@@ -78,9 +78,6 @@ export default {
         handleTaskDeleted(task) {
             // Vuelve a cargar todos los eventos del calendario
             this.calendarOptions.events = this.calendarOptions.events.filter(e => e.id !== task.id);
-
-            // Emitir evento para informar a App.vue sobre la tarea eliminada
-            this.$emit('task-deleted', task);
         },
     },
     mounted() {

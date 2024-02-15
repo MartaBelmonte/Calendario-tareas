@@ -9,30 +9,29 @@
     </header>
 
     <!-- Contenedor principal -->
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6" style="height: 50vh;">
-            <CalendarWidget :tasks="tasks" @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm"
-              @date-selected="updateSelectedDate" ref="calendarWidget" />
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6" style="height: 50vh;">
+          <CalendarWidget :tasks="tasks" @date-selected="updateSelectedDate" ref="calendarWidget" />
+        </div>
 
-          <!-- Componente TaskList -->
-          <div class="col-md-6 mt-5">
-            <div class="task-list-container">
-              <h2 class="text-center">Tareas Pendientes</h2>
-              <TaskList :tasks="tasks" :selectedDate="selectedDate" @task-deleted="handleTaskDeleted" />
-            </div>
+        <!-- Componente TaskList -->
+        <div class="col-md-6 mt-5">
+          <div class="task-list-container">
+            <h2 class="text-center">Tareas Pendientes</h2>
+            <TaskList :tasks="tasks" :selectedDate="selectedDate" @task-deleted="handleTaskDeleted" />
           </div>
         </div>
       </div>
+    </div>
 
-    <!-- Input de texto y botón -->
-    <div class="container" v-if="selectedDate">
-      <div class="row mt-1"> <!-- Reducido el margen top -->
-        <div class="col-md-6 offset-md-6">
+    <!-- Input de texto y botón (solo en dispositivos móviles) -->
+    <div class="container d-md-none"><!-- Mostrar solo en dispositivos móviles -->
+      <div class="row mt-3">
+        <div class="col-12">
           <div class="input-group">
             <textarea v-model="taskText" rows="3" class="form-control mb-1"
-              placeholder="Ingrese su tarea aquí"></textarea> <!-- Ajustar el margen inferior -->
+              placeholder="Ingrese su tarea aquí"></textarea>
             <button @click="saveTask" class="btn btn-primary btn-sm ml-2" style="height: 40px; line-height: 1;">Guardar
               tarea</button>
           </div>
@@ -129,6 +128,11 @@ export default {
   }
 }
 </style>
+
+
+
+
+
 
 
 
