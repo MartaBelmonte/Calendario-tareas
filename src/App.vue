@@ -27,7 +27,7 @@
 
     <!-- Input de texto y botón -->
         <div class="col-12">
-          <TaskInput :selectedDate="selectedDate" @new-task="handleTaskSaved"/>
+          <TaskInput v-if="selectedDate" :selectedDate="selectedDate" @new-task="handleTaskSaved"/>
         </div>
     </div>
     </main>
@@ -73,7 +73,7 @@ export default {
       // Filtrar las tareas para eliminar cualquier tarea con el mismo ID que la tarea que se va a eliminar
       this.tasks = this.tasks.filter(t => t.id !== task.id);
       // Eliminar el evento del calendario
-      this.$refs.calendarWidget.removeEventFromCalendar(task.id);
+      this.$refs.calendarWidget.handleTaskDeleted(task.id);
     }
   }
 };

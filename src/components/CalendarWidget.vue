@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -17,24 +16,6 @@ export default {
     props: ['tasks'],
     components: {
         FullCalendar
-    },
-    setup() {
-        const calendarRef = ref(null);
-
-        const removeEventFromCalendar = (eventId) => {
-            if (calendarRef.value) {
-                const calendarApi = calendarRef.value.getApi();
-                const event = calendarApi.getEventById(eventId);
-                if (event) {
-                    event.remove();
-                }
-            }
-        };
-
-        return {
-            calendarRef,
-            removeEventFromCalendar
-        };
     },
     data() {
         return {
@@ -83,19 +64,6 @@ export default {
             this.$emit('task-deleted', task);
         },
     },
-    mounted() {
-        // Establecer la referencia al calendario cuando el componente se monta
-        this.calendarRef = this.$refs.calendar;
-    },
-    watch: {
-        tasks: {
-            handler(newTasks) {
-                // Actualizar los eventos del calendario cuando cambien las tareas
-                this.calendarOptions.events = newTasks;
-            },
-            deep: true // Observar cambios profundos en las tareas (para arrays y objetos)
-        }
-    }
 };
 
 </script>
