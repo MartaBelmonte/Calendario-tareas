@@ -38,6 +38,11 @@ export default {
             selectedDate: null
         };
     },
+    watch: {
+        tasks(newVal) {
+            this.calendarOptions.events = newVal
+        }
+    },
     methods: {
         handleEventMount(info) {
             const el = info.el;
@@ -52,16 +57,6 @@ export default {
             });
             // Cambia el color del día seleccionado
             info.dayEl.style.backgroundColor = '#ffff99';
-        },
-        addEventToCalendar(event) {
-            this.calendarOptions.events.push(event);
-        },
-        handleTaskDeleted(task) {
-            // Vuelve a cargar todos los eventos del calendario
-            this.calendarOptions.events = this.calendarOptions.events.filter(e => e.id !== task.id);
-
-            // Emitir evento para informar a App.vue sobre la tarea eliminada
-            this.$emit('task-deleted', task);
         },
     },
 };

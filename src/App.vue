@@ -11,8 +11,7 @@
 <main class="container">
       <div class="row my-3">
         <div class="col-12 col-md-6">
-          <CalendarWidget :tasks="tasks" @task-saved="handleTaskSaved" @show-task-form="toggleTaskForm"
-            @date-selected="updateSelectedDate" ref="calendarWidget" />
+          <CalendarWidget :tasks="tasks" @date-selected="updateSelectedDate" ref="calendarWidget" />
         </div>
 
         <!-- Componente TaskList -->
@@ -72,8 +71,6 @@ export default {
     handleTaskDeleted(task) {
       // Filtrar las tareas para eliminar cualquier tarea con el mismo ID que la tarea que se va a eliminar
       this.tasks = this.tasks.filter(t => t.id !== task.id);
-      // Eliminar el evento del calendario
-      this.$refs.calendarWidget.handleTaskDeleted(task.id);
     }
   }
 };
