@@ -1,6 +1,6 @@
 <template>
     <div class="calendar-container">
-        <FullCalendar ref="calendar" :options="calendarOptions" class="full-calendar" />
+        <FullCalendar :options="calendarOptions" class="full-calendar" />
     </div>
 </template>
 
@@ -31,7 +31,7 @@ export default {
                     center: 'title',
                     end: 'next'
                 },
-                events: [],
+                events: this.tasks,
                 eventDidMount: this.handleEventMount,
                 dateClick: this.handleDayClick
             },

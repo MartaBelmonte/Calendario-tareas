@@ -11,7 +11,7 @@
 <main class="container">
       <div class="row my-3">
         <div class="col-12 col-md-6">
-          <CalendarWidget :tasks="tasks" @date-selected="updateSelectedDate" ref="calendarWidget" />
+          <CalendarWidget :tasks="tasks" @date-selected="updateSelectedDate"/>
         </div>
 
         <!-- Componente TaskList -->
