@@ -43,6 +43,7 @@
 import CalendarWidget from './components/CalendarWidget.vue';
 import TaskInput from './components/TaskInput.vue';
 import TaskList from './components/TaskList.vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -67,13 +68,46 @@ export default {
         // Si no existe, agregarla al array
         this.tasks.push(taskInfo);
       }
+      axios.post('http://localhost:8000/tareas', {
+        titulo: taskInfo.title,
+        fecha: taskInfo.date,
+      })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+      axios.get('http://localhost:8000/tareas', {
+        titulo: taskInfo.title,
+        fecha: taskInfo.date,
+      })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
+
+    eliminarTarea(id) {
+      axios.delete(`http://localhost:8000/tareas/${id}`)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+
     handleTaskDeleted(task) {
       // Filtrar las tareas para eliminar cualquier tarea con el mismo ID que la tarea que se va a eliminar
       this.tasks = this.tasks.filter(t => t.id !== task.id);
     }
   }
 };
+
 
 </script >
 
