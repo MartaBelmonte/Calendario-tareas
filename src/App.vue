@@ -91,15 +91,18 @@ export default {
         });
     },
 
-    eliminarTarea(id) {
-      axios.delete(`http://localhost:8000/tareas/${id}`)
+    deleteTask(task) {
+      axios.delete(`http://localhost:8000/tareas/${task.id}`)
         .then(response => {
           console.log(response.data);
+          // Emitir evento de tarea eliminada con la tarea eliminada como argumento
+          this.$emit('task-deleted', task);
         })
         .catch(error => {
           console.error(error);
         });
     },
+
 
     handleTaskDeleted(task) {
       // Filtrar las tareas para eliminar cualquier tarea con el mismo ID que la tarea que se va a eliminar
