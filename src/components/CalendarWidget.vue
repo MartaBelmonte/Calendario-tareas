@@ -4,8 +4,8 @@
     </div>
 </template>
 
-<script>
 
+<script>
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -51,16 +51,13 @@ export default {
         handleDayClick(info) {
             const selectedDate = info.dateStr;
             this.$emit('date-selected', selectedDate);
-            // Resetea el color de todos los días
             document.querySelectorAll('.fc-day').forEach(day => {
                 day.style.backgroundColor = '';
             });
-            // Cambia el color del día seleccionado
             info.dayEl.style.backgroundColor = '#ffff99';
         },
     },
 };
-
 </script>
 
 <style scoped>

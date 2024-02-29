@@ -22,17 +22,16 @@
           </div>
         </div>
       </div>
+        <!-- Input de texto y botón -->
     <div class="row mb-5">
-
-    <!-- Input de texto y botón -->
         <div class="col-12">
           <TaskInput v-if="selectedDate" :selectedDate="selectedDate" @new-task="handleTaskSaved"/>
         </div>
     </div>
-    </main>
+</main>
 
     <!-- Footer -->
-<footer class="footer bg-dark text-white py-2 mt-4 fixed-bottom">
+    <footer class="footer bg-dark text-white py-2 mt-4 fixed-bottom">
       <div class="container text-center">
         <p class="mb-0">© 2024 Marta Belmonte Andrés</p>
       </div>
@@ -61,44 +60,40 @@ export default {
     updateSelectedDate(date) {
       this.selectedDate = date;
     },
+
     handleTaskSaved(taskInfo) {
-      // Verificar si la tarea ya existe en el array
       const existingTaskIndex = this.tasks.findIndex(task => task.id === taskInfo.id);
       if (existingTaskIndex === -1) {
-        // Si no existe, agregarla al array
         this.tasks.push(taskInfo);
       }
-      axios.post('http://localhost:8000/tareas', {
-        titulo: taskInfo.title,
-        fecha: taskInfo.date,
-      })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-
-      axios.get('http://localhost:8000/tareas', {
-        titulo: taskInfo.title,
-        fecha: taskInfo.date,
-      })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error(error);
-        });
+          axios.post('http://localhost:8000/tareas', {
+            titulo: taskInfo.title,
+            fecha: taskInfo.date,
+          })
+            .then(response => {
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          
+          axios.get('http://localhost:8000/tareas', {
+            titulo: taskInfo.title,
+            fecha: taskInfo.date,
+          })
+            .then(response => {
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.error(error);
+            });
     },
 
     handleTaskDeleted(task) {
-      // Filtrar las tareas para eliminar cualquier tarea con el mismo ID que la tarea que se va a eliminar
       this.tasks = this.tasks.filter(t => t.id !== task.id);
     }
   }
 };
-
-
 </script >
 
 <style>
@@ -126,7 +121,8 @@ export default {
   100% {
     opacity: 1;
   }
-}</style>
+}
+</style>
 
 
 

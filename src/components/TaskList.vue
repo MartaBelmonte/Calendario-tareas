@@ -48,9 +48,7 @@ export default {
 
 .task-divider {
     border-top: 1px solid #ccc;
-    /* Línea de separación entre las tareas */
     margin-top: 20px;
-    /* Espacio entre las tareas */
 }
 </style>
 
