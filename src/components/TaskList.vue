@@ -13,16 +13,26 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'TaskList',
-    props: ['tasks'], // Recibe las tareas como propiedades
+    props: ['tasks'], 
     methods: {
         deleteTask(task) {
-            this.$emit('task-deleted', task);
+            axios.delete(`http://localhost:8000/tareas/${task.id}`)
+                .then(() => {
+                    console.log("Tarea eliminada:", task);
+                    this.$emit('task-deleted', task);
+                })
+                .catch(error => {
+                    console.error("Error al eliminar tarea:", error);
+                });
         }
     }
 };
 </script>
+
 
 <style scoped>
 .task-list {
